@@ -1,5 +1,5 @@
 
-var psychicChoices= ["a", "b", "c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
+var psychicChoices= ["a", "e","i","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
 var playerGuess= 0;
 var wins = 0;
 var losses = 0;
@@ -12,28 +12,35 @@ var lossesText = document.getElementById("losses-text");
 var guessesText = document.getElementById("guesses-text");
 var wrongText = document.getElementById("wrong-text");
 
+var psychicAns = psychicChoices[Math.floor(Math.random() * psychicChoices.length)];
+var lettersGuessed = [];
+
 document.addEventListener("keyup",function(event){
 
     var playerGuess = event.key;
-    var psychicAns = psychicChoices[Math.floor(Math.random() * psychicChoices.length)];
-
-
+   
+    console.log(psychicAns);
     if (playerGuess === psychicAns){
         wins ++;
         guesses = 9;
+        psychicAns = psychicChoices[Math.floor(Math.random() * psychicChoices.length)];
     } else {
-        losses ++ ;
-        guesses -- <= 10;
-       
+        losses ++;
+        guesses --;
+        lettersGuessed.push(playerGuess);
+        if(guesses === 0) {
+            guesses = 10;
+            alert('game over');
+            psychicAns = psychicChoices[Math.floor(Math.random() * psychicChoices.length)];
+
+        }
     }
     if (losses === 5){
         win= 0;
-
-
     }
 
     winsText.textContent = "Wins:" + wins;
     lossesText.textContent = "Losses:" + losses;
     guessesText.textContent = "Guesses Left:" + guesses ;
-    wrongText.textContent = "Your Guesses so far:"+  event.key  ;
+    wrongText.textContent = "Your Guesses so far:"+  lettersGuessed ;
 })
